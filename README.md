@@ -110,12 +110,6 @@ To get this project running on your local system, you can follow these steps:
 6.  **Access the Application**
     Open `http://127.0.0.1:5000/` in your browser to use the form.
 
-## Interface Preview
-
-Below is a preview of the Tech Request submission form interface I designed:
-
-![Tech Request Form Interface](./images/tech_request_form.png)
-
 ## How it Works
 
 Here's the workflow I designed:

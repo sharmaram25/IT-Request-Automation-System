@@ -1,0 +1,13 @@
+<h2>New Tech Solution Request</h2>
+<p>A new request has been submitted:</p>
+<ul>
+    <li><strong>Name:</strong> {{ name }}</li>
+    <li><strong>Email:</strong> {{ email }}</li>
+    <li><strong>Department:</strong> {{ department }}</li>
+    <li><strong>Request Details:</strong> {{ request_details }}</li>
+</ul>
+<p>Please approve or reject this request by clicking one of the links below:</p>
+<p>
+    <a href="{{ approve_url }}">Approve</a> | 
+    <a href="{{ reject_url }}">Reject</a>
+</p>

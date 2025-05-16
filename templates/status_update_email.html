@@ -1,0 +1,12 @@
+
+<h2>Request {{ status }}</h2>
+<p>Dear {{ name }},</p>
+<p>Your request for a tech solution has been {{ status }}.</p>
+<p><strong>Request Details:</strong></p>
+<p>{{ request_details }}</p>
+{% if status == 'approved' %}
+<p>Your request has been logged and the IT team will begin working on it soon.</p>
+{% else %}
+<p>If you have any questions, please contact the IT department.</p>
+{% endif %}
+<p>Thank you!</p>

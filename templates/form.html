@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Form</title>
+    <style>
+        /* Import Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap');
+
+        /* CSS Custom Properties for theming */
+        :root {
+            --primary-accent: #00e5ff;
+            --secondary-accent: #ff00aa;
+            --bg-gradient-start: #1f2833;
+            --bg-gradient-end: #0b0c10;
+            
+            --text-primary: #f0f0f0;
+            --text-secondary: #c5c6c7;
+            
+            --container-bg: rgba(20, 22, 30, 0.75);
+            --container-border: rgba(0, 229, 255, 0.2);
+
+            --input-bg: rgba(0, 0, 0, 0.3);
+            --input-border: rgba(255, 255, 255, 0.2);
+            --input-focus-border: var(--primary-accent);
+            --input-text: var(--text-primary);
+
+            --button-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            --floating-icon-color: rgba(0, 229, 255, 0.2);
+        }
+
+        /* Basic body styling and animated gradient background with grid pattern */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            background-size:
+                30px 30px,
+                30px 30px,
+                auto;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        /* Container for animated floating background icons */
+        .background-decorations {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        /* Individual floating icon styling and animation */
+        .floating-icon {
+            position: absolute;
+            color: var(--floating-icon-color);
+            animation: float 8s ease-in-out infinite;
+            transition: transform 0.4s ease, color 0.4s ease;
+            pointer-events: auto;
+        }
+
+        .floating-icon:hover {
+            transform: scale(1.25) translateY(-7px);
+            color: rgba(0, 229, 255, 0.6);
+        }
+
+        /* Float animation keyframes */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-15px) rotate(3deg);
+            }
+        }
+        
+        /* Positioning and animation delays for background icons */
+        .icon-briefcase { top: 10%; left: 8%; font-size: 1.8em; animation-delay: 0s; }
+        .icon-chart { top: 15%; left: 85%; font-size: 2.2em; animation-delay: -1.5s; transform: rotate(-10deg); }
+        .icon-computer { top: 75%; left: 12%; font-size: 2.3em; animation-delay: -2.5s; }
+        .icon-gear { top: 70%; left: 90%; font-size: 2.0em; animation-delay: -3.5s; transform: rotate(15deg); }
+        .icon-bulb { top: 30%; left: 48%; font-size: 1.7em; animation-delay: -4.5s; }
+        .icon-network { top: 85%; left: 55%; font-size: 2.1em; animation-delay: -0.8s; transform: rotate(10deg);}
+        .icon-atom { top: 45%; left: 10%; font-size: 2.0em; animation-delay: -5s; transform: rotate(5deg); }
+        .icon-cloud { top: 50%; left: 80%; font-size: 2.2em; animation-delay: -6s; }
+        .icon-code { top: 80%; left: 25%; font-size: 1.9em; animation-delay: -2s; transform: rotate(-5deg); }
+        .icon-server { top: 10%; left: 30%; font-size: 2.0em; animation-delay: -3s; }
+        .icon-mobile { top: 60%; left: 70%; font-size: 1.8em; animation-delay: -1.2s; transform: rotate(8deg); }
+        .icon-database { top: 35%; left: 20%; font-size: 2.1em; animation-delay: -5.5s; }
+
+        /* Main form container with glassmorphism effect */
+        .container {
+            background: var(--container-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 30px 45px;
+            border-radius: 20px;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 600px;
+            color: var(--text-primary);
+            transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+            border: 1px solid var(--container-border);
+            position: relative;
+            z-index: 1;
+        }
+
+        .container:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Form heading style */
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-accent);
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 2.1em;
+        }
+
+        /* Styling for form input groups */
+        .form-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        /* Form label styles */
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+
+        /* Input field and textarea base styles */
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 12px 18px;
+            padding-left: 40px; /* Space for conceptual icon */
+            border: 1px solid var(--input-border);
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 0.95em;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            background-color: var(--input-bg);
+            color: var(--input-text);
+        }
+        
+        /* Conceptual icon placeholder for input fields (requires icon font) */
+        .form-group::before {
+            /* Font Awesome example: content: '\f007'; for a user icon */
+            font-family: "Font Awesome 5 Free"; 
+            position: absolute;
+            left: 15px;
+            top: 42px; 
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 1.05em; 
+            pointer-events: none;
+        }
+
+        /* Focus styles for input fields and textarea */
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            border-color: var(--input-focus-border);
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.35);
+            outline: none;
+            background-color: rgba(0,0,0,0.45);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        /* Specific adjustments for textarea (no icon) */
+        label[for="request_details"] + textarea {
+            padding-left: 18px;
+        }
+        label[for="request_details"] + textarea::before {
+            content: ""; /* Remove icon space for this specific textarea */
+        }
+
+        /* Submit button styling with gradient and ripple effect */
+        button {
+            background: linear-gradient(135deg, var(--primary-accent) 0%, var(--secondary-accent) 100%);
+            color: var(--bg-gradient-end);
+            padding: 14px 22px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.05em;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            width: 100%;
+            letter-spacing: 0.5px;
+            box-shadow: var(--button-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Ripple effect element */
+        button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
+
+        /* Ripple animation trigger */
+        button:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        /* Ripple animation keyframes */
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0) translate(-50%, -50%);
+                opacity: 1;
+            }
+            20% {
+                transform: scale(25, 25) translate(-50%, -50%);
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(40, 40) translate(-50%, -50%);
+            }
+        }
+
+        /* Button hover and active states */
+        button:hover {
+            background: linear-gradient(135deg, var(--secondary-accent) 0%, var(--primary-accent) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        button:active {
+            transform: translateY(0px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Styling for Flask flash messages */
+        .flash-message {
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.95em;
+            border: 1px solid transparent;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Fade-in animation for flash messages */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .flash-success {
+            background-color: rgba(0, 229, 255, 0.1);
+            color: var(--primary-accent);
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+
+        .flash-error {
+            background-color: rgba(255, 0, 170, 0.1);
+            color: var(--secondary-accent);
+            border-color: rgba(255, 0, 170, 0.3);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Animated background icons -->
+    <div class="background-decorations">
+        <span class="floating-icon icon-briefcase">💼</span>
+        <span class="floating-icon icon-chart">📈</span>
+        <span class="floating-icon icon-computer">💻</span>
+        <span class="floating-icon icon-gear">⚙️</span>
+        <span class="floating-icon icon-bulb">💡</span>
+        <span class="floating-icon icon-network">🌐</span>
+        <span class="floating-icon icon-atom">⚛️</span>
+        <span class="floating-icon icon-cloud">☁️</span>
+        <span class="floating-icon icon-code">&lt;/&gt;</span>
+        <span class="floating-icon icon-server">🗄️</span>
+        <span class="floating-icon icon-mobile">📱</span>
+        <span class="floating-icon icon-database">💾</span>
+    </div>
+
+    <!-- Main form content area -->
+    <div class="container">
+        <h1>Submit a New Tech Request</h1>
+        
+        <!-- Flask flash messages display here -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        
+        <!-- Request submission form -->
+        <form method="POST">
+            <div class="form-group">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            </div>
+
+            <div class="form-group">
+                <label for="department">Department:</label>
+                <input type="text" id="department" name="department" placeholder="Enter your department" required>
+            </div>
+
+            <div class="form-group">
+                <label for="request_details">Request Details:</label>
+                <textarea id="request_details" name="request_details" placeholder="Describe your request in detail" required></textarea>
+            </div>
+
+            <button type="submit">Submit Request</button>
+        </form>
+    </div>
+</body>
+</html>

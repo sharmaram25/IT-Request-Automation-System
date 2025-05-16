@@ -29,6 +29,8 @@ I've structured the project as follows:
 │   ├── approval_email.html     # HTML template for the approval email
 │   ├── confirmation_email.html # HTML template for the requestor confirmation
 │   └── status_update_email.html  # HTML template for the status update email
+├── images/
+│   └── tech_request_form.png   # Screenshot of the request form interface
 ├── .env                    # Stores environment variables (SMTP credentials, etc.) - YOU NEED TO CREATE THIS
 ├── requirements.txt        # Python dependencies I used
 ├── requests.xlsx           # Excel file for logging approved requests (created automatically by the app)
@@ -99,6 +101,12 @@ To get this project running on your local system, you can follow these steps:
 
 6.  **Access the Application**
     Open `http://127.0.0.1:5000/` in your browser to use the form.
+
+## Interface Preview
+
+Below is a preview of the Tech Request submission form interface I designed:
+
+![Tech Request Form Interface](./images/tech_request_form.png)
 
 ## How it Works
 

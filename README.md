@@ -2,6 +2,12 @@
 
 This is a project I developed to implement a simple web-based system for managing tech solution requests. It allows users to submit requests through a form I designed, an IT manager to approve or reject them via email links, and logs approved requests into an Excel file.
 
+## Screenshot
+
+![Tech Request Form](images/tech_request_form.png)
+
+*The web form interface for submitting tech requests*
+
 ## Features
 
 Here are some of the key features I've included:
@@ -29,6 +35,8 @@ I've structured the project as follows:
 │   ├── approval_email.html     # HTML template for the approval email
 │   ├── confirmation_email.html # HTML template for the requestor confirmation
 │   └── status_update_email.html  # HTML template for the status update email
+├── images/
+│   └── tech_request_form.png   # Screenshot of the web form interface
 ├── images/
 │   └── tech_request_form.png   # Screenshot of the request form interface
 ├── .env                    # Stores environment variables (SMTP credentials, etc.) - YOU NEED TO CREATE THIS
